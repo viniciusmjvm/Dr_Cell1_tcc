@@ -1,0 +1,43 @@
+inherited f_unidades_herdado: Tf_unidades_herdado
+  Caption = 'Cadastro de Unidades - Herdado'
+  ExplicitTop = 8
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label2: TLabel [2]
+    Left = 24
+    Top = 24
+    Width = 63
+    Height = 16
+    Caption = 'Descricao'
+    FocusControl = edit_descricao
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object edit_descricao: TDBEdit [11]
+    Left = 24
+    Top = 46
+    Width = 545
+    Height = 21
+    DataField = 'descricao'
+    DataSource = ds_dados
+    TabOrder = 8
+  end
+  inherited q_dados: TFDQuery
+    SQL.Strings = (
+      'select * from unidades'
+      'order by descricao')
+    object q_dadosdescricao: TStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Required = True
+      Size = 100
+    end
+  end
+  inherited ds_dados: TDataSource
+    DataSet = q_dados
+  end
+end

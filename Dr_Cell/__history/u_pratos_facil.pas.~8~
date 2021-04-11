@@ -1,0 +1,140 @@
+unit u_pratos_facil;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.DBCtrls, Vcl.Mask, Vcl.Grids, Vcl.DBGrids;
+
+type
+  Tf_prato_facil = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label4: TLabel;
+    DBGrid1: TDBGrid;
+    edit_nome: TDBEdit;
+    edit_valor_unitario: TDBEdit;
+    b_fechar: TBitBtn;
+    b_excluir: TBitBtn;
+    b_alterar: TBitBtn;
+    b_incluir: TBitBtn;
+    b_gravar: TBitBtn;
+    b_cancelar: TBitBtn;
+    edit_pesquisa: TEdit;
+    q_pratos: TFDQuery;
+    ds_pratos: TDataSource;
+    Label3: TLabel;
+    dbm_descricao_detalhada: TDBMemo;
+    procedure b_incluirClick(Sender: TObject);
+    procedure b_alterarClick(Sender: TObject);
+    procedure b_excluirClick(Sender: TObject);
+    procedure b_gravarClick(Sender: TObject);
+    procedure b_cancelarClick(Sender: TObject);
+    procedure b_fecharClick(Sender: TObject);
+    procedure edit_pesquisaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+    procedure Controle_visual;
+    procedure carregar_dados(s : string);
+
+  end;
+
+var
+  f_prato_facil: Tf_prato_facil;
+
+implementation
+
+{$R *.dfm}
+
+//------------------------------------------------------------------
+procedure Tf_prato_facil.Controle_visual;
+begin
+
+     edit_nome.Enabled:= q_pratos.State in [dsEdit, dsInsert];
+     edit_valor_unitario.Enabled:= edit_nome.Enabled;
+     dbm_descricao_detalhada.Enabled:= edit_nome.Enabled;
+
+     b_gravar.Enabled:= edit_nome.Enabled;
+     b_cancelar.Enabled:= edit_nome.Enabled;
+
+     b_excluir.Enabled:= not edit_nome.Enabled;
+     b_alterar.Enabled:= not edit_nome.Enabled;
+     b_incluir.Enabled:= not edit_nome.Enabled;
+
+     b_fechar.Enabled:= not edit_nome.Enabled;
+
+     DBGrid1.Enabled:= not edit_nome.Enabled;
+
+     edit_pesquisa.enabled:= not edit_nome.Enabled;
+
+
+end;
+
+procedure Tf_prato_facil.edit_pesquisaChange(Sender: TObject);
+begin
+     carregar_dados(edit_pesquisa.Text);
+end;
+
+procedure Tf_prato_facil.carregar_dados(s : string);
+begin
+     q_pratos.sql.clear;
+     q_pratos.sql.add(' select * from pratos ');
+     q_pratos.sql.add(' where nome like ' + QuotedStr('%'+s+'%') + ' ');
+     q_pratos.sql.add(' order by nome ');
+     q_pratos.open;
+
+end; // carregar_dados
+
+
+procedure Tf_prato_facil.b_alterarClick(Sender: TObject);
+begin
+     q_pratos.Edit;
+end;
+
+procedure Tf_prato_facil.b_cancelarClick(Sender: TObject);
+begin
+     q_pratos.Cancel;
+end;
+
+procedure Tf_prato_facil.b_excluirClick(Sender: TObject);
+begin
+     // fazer validações
+
+     // pedindo confirmação
+     if MessageDlg('Deseja realmente excluir este registro ??',mtConfirmation,[mbYes,mbNo],0) = mrNo then
+     begin
+          exit;
+     end;
+
+     q_pratos.Delete;
+end;
+
+procedure Tf_prato_facil.b_fecharClick(Sender: TObject);
+begin
+     close;
+end;
+
+procedure Tf_prato_facil.b_gravarClick(Sender: TObject);
+begin
+     if edit_nome.Text = '' then
+     begin
+          MessageDlg('O nome deve ser informado !',mtError,[mbOk],0);
+          exit;
+     end;
+
+     q_pratos.Post;
+end;
+
+procedure Tf_prato_facil.b_incluirClick(Sender: TObject);
+begin
+     q_pratos.Insert;
+end;
+
+end.

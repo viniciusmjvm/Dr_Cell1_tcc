@@ -1,0 +1,5 @@
+inherited f_compras_herdado: Tf_compras_herdado
+  Caption = 'Cadastro de Compras - Herdado'
+  PixelsPerInch = 96
+  TextHeight = 13
+end

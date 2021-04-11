@@ -1,0 +1,7 @@
+inherited f_pecas_herdados: Tf_pecas_herdados
+  Caption = 'Cadastro de Pe'#231'as'
+  ExplicitWidth = 670
+  ExplicitHeight = 486
+  PixelsPerInch = 96
+  TextHeight = 13
+end

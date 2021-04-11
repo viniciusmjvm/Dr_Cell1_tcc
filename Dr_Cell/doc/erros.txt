@@ -1,0 +1,13 @@
+reparos:
+botao avancar > programar
+Edti da entrega sem preencido sozinho quando o rad entregue for selecionado
+
+
+reparos(validar rad)
+
+
+
+
+validar rad
+valor total
+desconto

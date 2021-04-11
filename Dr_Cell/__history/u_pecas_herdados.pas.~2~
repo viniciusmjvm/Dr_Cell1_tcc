@@ -1,0 +1,70 @@
+unit u_pecas_herdados;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tf_pecas_herdados = class(Tf_cadastropadrao)
+    q_dadoscod_peca: TFDAutoIncField;
+    q_dadosdescricao: TStringField;
+    q_dadosvalor: TFloatField;
+    q_dadosqntd: TIntegerField;
+    Label2: TLabel;
+    edit_descricao: TDBEdit;
+    Label3: TLabel;
+    edit_valor: TDBEdit;
+    Label4: TLabel;
+    edit_quantidade: TDBEdit;
+    procedure feKeyPress(Sender: TObject; var Key: Char);
+    procedure feKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_pecas_herdados: Tf_pecas_herdados;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tf_pecas_herdados.feKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+     inherited;
+     if key = 13 then edit_quantidade.setfocus;
+
+     // se pressionou F4
+     if key = vk_f4 then
+     begin
+          b_gravar.OnClick(self);
+     end;
+end;
+
+procedure Tf_pecas_herdados.feKeyPress(Sender: TObject; var Key: Char);
+begin
+     inherited;
+     if not (key in ['1','2','3','4','5','6','7','8','9','0',',','x']) then
+     key :=#0;
+end;
+
+procedure Tf_pecas_herdados.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     inherited;
+     Action:=caFree;
+     f_pecas_herdados:= nil;
+end;
+
+end.

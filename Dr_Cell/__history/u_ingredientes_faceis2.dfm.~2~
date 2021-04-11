@@ -1,0 +1,109 @@
+object f_ing_facil2: Tf_ing_facil2
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro F'#225'cil de Infredientes - Vers'#227'o 2'
+  ClientHeight = 283
+  ClientWidth = 565
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poScreenCenter
+  Visible = True
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Bevel1: TBevel
+    Left = 0
+    Top = 0
+    Width = 566
+    Height = 73
+  end
+  object Label1: TLabel
+    Left = 16
+    Top = 8
+    Width = 57
+    Height = 16
+    Caption = 'Pesquisa'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object edit_pesquisa: TEdit
+    Left = 16
+    Top = 32
+    Width = 521
+    Height = 21
+    TabOrder = 0
+    OnChange = edit_pesquisaChange
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 72
+    Width = 566
+    Height = 161
+    DataSource = ds_ingredientes
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object b_fechar: TBitBtn
+    Left = 464
+    Top = 247
+    Width = 93
+    Height = 26
+    Caption = 'Fechar'
+    TabOrder = 2
+    OnClick = b_fecharClick
+  end
+  object b_excluir: TBitBtn
+    Left = 377
+    Top = 247
+    Width = 81
+    Height = 26
+    Caption = 'Excluir'
+    TabOrder = 3
+    OnClick = b_excluirClick
+  end
+  object b_alterar: TBitBtn
+    Left = 287
+    Top = 247
+    Width = 84
+    Height = 26
+    Caption = 'Alterar'
+    TabOrder = 4
+    OnClick = b_alterarClick
+  end
+  object b_incluir: TBitBtn
+    Left = 201
+    Top = 247
+    Width = 80
+    Height = 26
+    Caption = 'Incluir'
+    TabOrder = 5
+    OnClick = b_incluirClick
+  end
+  object q_ingredientes: TFDQuery
+    ConnectionName = 'MINHA_CONEXAO'
+    SQL.Strings = (
+      'select * from ingredientes order by descricao')
+    Left = 272
+    Top = 136
+  end
+  object ds_ingredientes: TDataSource
+    DataSet = q_ingredientes
+    Left = 376
+    Top = 136
+  end
+end

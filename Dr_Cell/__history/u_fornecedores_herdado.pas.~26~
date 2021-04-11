@@ -1,0 +1,157 @@
+unit u_fornecedores_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls, Vcl.Mask, Vcl.ComCtrls,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  Tf_fornecedores_herdado = class(Tf_cadastropadrao)
+    q_dadoscod_fornecedor: TFDAutoIncField;
+    q_dadosnome: TStringField;
+    q_dadoscnpj: TStringField;
+    q_dadosendereco: TStringField;
+    q_dadosnum_casa: TIntegerField;
+    q_dadosbairro: TStringField;
+    q_dadoscod_cidade: TIntegerField;
+    q_dadoscep: TStringField;
+    q_dadostelefone: TStringField;
+    q_dadoscelular: TStringField;
+    q_dadosemail: TStringField;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Contato: TTabSheet;
+    Label2: TLabel;
+    edit_nome: TDBEdit;
+    Label3: TLabel;
+    edit_cnpj: TDBEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    edit_cep: TDBEdit;
+    cb1: TDBLookupComboBox;
+    Label6: TLabel;
+    edit_endereco: TDBEdit;
+    Label7: TLabel;
+    edit_num: TDBEdit;
+    Label8: TLabel;
+    edit_bairro: TDBEdit;
+    Label9: TLabel;
+    edit_telefone: TDBEdit;
+    Label10: TLabel;
+    edit_celular: TDBEdit;
+    Label11: TLabel;
+    edit_email: TDBEdit;
+    q_cidades: TFDQuery;
+    ds_cidades: TDataSource;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure b_excluirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   protected
+            function Validar : boolean; override;
+            // function pode_excluir: string; override;
+             procedure controle_visual; override;
+
+  end;
+
+var
+  f_fornecedores_herdado: Tf_fornecedores_herdado;
+
+implementation
+
+{$R *.dfm}
+
+uses u_dm;
+
+procedure Tf_fornecedores_herdado.b_excluirClick(Sender: TObject);
+begin
+     dm.q_geral.sql.Clear;
+     dm.q_geral.sql.add(' select count(*) as total ' );
+     dm.q_geral.sql.add(' from contas ');
+     dm.q_geral.sql.add(' where cod_fornecedor = ' + QuotedStr(q_dados.FieldByName('cod_fornecedor').AsString) );
+     dm.q_geral.Open;
+     if dm.Q_Geral.FieldByName('total').AsInteger > 0 then
+     begin
+          ShowMessage('Não é possível excluir esse Fornecedor, porque há CONTAS relacionadas !');
+          exit;
+     end;
+
+     inherited;
+
+end;
+
+procedure Tf_fornecedores_herdado.controle_visual;
+begin
+     inherited;
+
+     edit_nome.Enabled := q_dados.State in [dsEdit, dsInsert];
+     edit_cnpj.Enabled := edit_nome.Enabled;
+     edit_endereco.Enabled := edit_nome.Enabled;
+     edit_num.Enabled := edit_nome.Enabled;
+     edit_bairro.Enabled := edit_nome.Enabled;
+     cb1.Enabled := edit_nome.Enabled;
+     edit_cep.Enabled := edit_nome.Enabled;
+     edit_telefone.Enabled := edit_nome.Enabled;
+     edit_email.Enabled := edit_nome.Enabled;
+     edit_celular.Enabled := edit_nome.Enabled;
+end;
+
+procedure Tf_fornecedores_herdado.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+     inherited;
+     Action:= caFree;
+     f_fornecedores_herdado:= nil;
+end;
+
+procedure Tf_fornecedores_herdado.FormCreate(Sender: TObject);
+begin
+     inherited;
+     q_cidades.Open;
+end;
+
+function Tf_fornecedores_herdado.validar;
+begin
+     if trim(edit_nome.Text) = '' then
+     begin
+          ShowMessage('O nome deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_cnpj.Text) = '' then
+     begin
+          ShowMessage('O CNPJ deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if (cb1.KeyValue = null) OR (cb1.KeyValue = 0) then
+     begin
+          ShowMessage('O campo cidade deve ser preenchido !');
+          result := false;
+          exit;
+     end;
+
+     if trim(edit_celular.Text) = '' then
+     begin
+          MessageDlg('O campo celular deve ser preenchido !',mtError,[mbOk],0);
+          result := false;
+          exit;
+     end;
+
+     result:= true;
+
+end;
+
+
+end.

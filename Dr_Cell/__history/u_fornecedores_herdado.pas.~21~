@@ -1,0 +1,212 @@
+unit u_fornecedores_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask,
+  Vcl.ComCtrls, Vcl.Buttons;
+
+type
+  Tf_fornecedores_herdado = class(Tf_cadastropadrao)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Label4: TLabel;
+    edit_cnpj: TDBEdit;
+    Label8: TLabel;
+    TabSheet2: TTabSheet;
+    Label10: TLabel;
+    edit_telefone: TDBEdit;
+    Label11: TLabel;
+    edit_celular: TDBEdit;
+    Label12: TLabel;
+    edit_email: TDBEdit;
+    edit_cod_cidade: TDBEdit;
+    b_pesquisa_cidade: TSpeedButton;
+    edit_nome_cidade: TDBEdit;
+    q_dadoscod_fornecedor: TFDAutoIncField;
+    q_dadosnome: TStringField;
+    q_dadoscnpj: TStringField;
+    q_dadosendereco: TStringField;
+    q_dadosnum_casa: TIntegerField;
+    q_dadosbairro: TStringField;
+    q_dadoscod_cidade: TIntegerField;
+    q_dadoscep: TStringField;
+    q_dadostelefone: TStringField;
+    q_dadoscelular: TStringField;
+    q_dadosemail: TStringField;
+    Label2: TLabel;
+    edit_nome: TDBEdit;
+    Label13: TLabel;
+    edit_cep: TDBEdit;
+    DBEdit5: TDBEdit;
+    Label3: TLabel;
+    edit_endereco: TDBEdit;
+    Label15: TLabel;
+    edit_bairro: TDBEdit;
+    Label5: TLabel;
+    edit_num: TDBEdit;
+    procedure b_pesquisa_cidadeClick(Sender: TObject);
+    procedure edit_cod_cidadeChange(Sender: TObject);
+    procedure edit_cod_cidadeKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
+
+    private
+
+         function validar : boolean; override;
+
+
+  public
+    { Public declarations }
+  end;
+
+var
+  f_fornecedores_herdado: Tf_fornecedores_herdado;
+
+implementation
+
+{$R *.dfm}
+
+uses u_pesquisa, u_dm, funcoes;
+
+procedure Tf_fornecedores_herdado.b_pesquisa_cidadeClick(Sender: TObject);
+begin
+  inherited;
+   f_pesquisa:= Tf_pesquisa.create(application);
+
+  f_pesquisa.tabela:='cidades';
+  f_pesquisa.codigo:='cod_cidade';
+  f_pesquisa.campo1:='nome';
+  f_pesquisa.campo2:='uf';
+
+  f_pesquisa.rotulo_codigo:='Código';
+  f_pesquisa.rotulo_c1:='Nome da Cidade';
+  f_pesquisa.rotulo_c2:='Unidade Federal';
+
+  f_pesquisa.largura_codigo:=0.10; //10% de largura do dbgrid
+  f_pesquisa.largura_c1:=0.60;
+  f_pesquisa.largura_c2:=0.20;
+
+  f_pesquisa.ShowModal;
+
+  if f_pesquisa.ModalResult = mrOk then
+  begin
+      edit_cod_cidade.Text:=f_pesquisa.q_dados.FieldByName(f_pesquisa.codigo).AsString;
+  end;
+  f_pesquisa.Free; // retira o objeto da memória
+end;
+
+procedure Tf_fornecedores_herdado.edit_cod_cidadeChange(Sender: TObject);
+begin
+  inherited;
+    edit_nome_cidade.Text:='';
+
+    dm.q_geral.SQL.Clear;
+    dm.q_geral.SQL.add('select * from cidades where cod_cidade = ' + QuotedStr(edit_cod_cidade.Text));
+    dm.q_geral.open;
+
+    if not dm.q_geral.IsEmpty then
+    edit_nome_cidade.Text:= dm.q_geral.FieldByName('nome').AsString + '-' +
+                             dm.q_geral.FieldByName('uf').AsString;
+end;
+
+procedure Tf_fornecedores_herdado.edit_cod_cidadeKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+    if key = vk_f4 then
+    begin
+         b_pesquisa_cidade.OnClick(b_pesquisa_cidade);
+    end;
+end;
+
+
+
+procedure Tf_fornecedores_herdado.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  Action:=caFree;
+  f_fornecedores_herdado:=nil;
+end;
+
+
+
+function Tf_fornecedores_herdado.validar;
+begin
+     if trim(edit_nome.Text) = '' then
+     begin
+          ShowMessage('O Nome  deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_cnpj.Text) = '' then
+     begin
+          ShowMessage('O CNPJ deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+//     if combo_cod_cidade.ItemIndex = -1 then
+//     begin
+ //         ShowMessage('A cidade deve ser preenchida!');
+//          exit;
+//     end;
+
+     if trim(edit_endereco.Text) = '' then
+     begin
+          ShowMessage('O Endereço deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_Bairro.Text) = '' then
+     begin
+          ShowMessage('O Bairro deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+
+     if trim(edit_telefone.Text) = '' then
+     begin
+          ShowMessage('O Telefone deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_celular.Text) = '' then
+     begin
+          ShowMessage('O Celular deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_cep.Text) = '' then
+     begin
+          ShowMessage('O CEP deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_email.Text) = '' then
+     begin
+          ShowMessage('O E-mail deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     result:= true;
+
+end;
+
+
+
+end.

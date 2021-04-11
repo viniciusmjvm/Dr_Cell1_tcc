@@ -1,0 +1,74 @@
+unit u_ingredientes_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tf_ingredientes_herdado = class(Tf_cadastropadrao)
+    q_dadosdescricao: TStringField;
+    q_dadosvalor_unitario: TFloatField;
+    q_dadoscod_unidade: TIntegerField;
+    Label2: TLabel;
+    edit_descricao: TDBEdit;
+    Label3: TLabel;
+    edit_valor: TDBEdit;
+    Label4: TLabel;
+    combo_cod_medida: TDBLookupComboBox;
+    ds_unidades: TDataSource;
+    q_unidades: TFDQuery;
+  private
+
+         function validar : boolean; override;
+
+  public
+    { Public declarations }
+
+
+
+
+    { Public declarations }
+  end;
+
+var
+  f_ingredientes_herdado: Tf_ingredientes_herdado;
+
+implementation
+
+{$R *.dfm}
+
+
+function Tf_ingredientes_herdado.validar;
+begin
+     if trim(edit_descricao.Text) = '' then
+     begin
+          ShowMessage('A Descrição deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_valor.Text) = '' then
+     begin
+          ShowMessage('O Valor Total deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+ //    if combo_cod_medida.ItemIndex = -1 then
+//     begin
+ //         ShowMessage('A Unidade de Medida deve ser preenchida!');
+ //         exit;
+ //    end;
+
+
+
+     result:= true;
+
+end;
+end.

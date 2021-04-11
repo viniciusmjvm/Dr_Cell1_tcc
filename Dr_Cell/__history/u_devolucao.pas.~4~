@@ -1,0 +1,187 @@
+unit u_devolucao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.CheckLst,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tf_devolucao = class(TForm)
+    Label1: TLabel;
+    edit_nome: TEdit;
+    Label2: TLabel;
+    Button1: TButton;
+    b_produto: TSpeedButton;
+    edit_data: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Button2: TButton;
+    Button3: TButton;
+    rad1: TRadioButton;
+    rad2: TRadioButton;
+    rad3: TRadioButton;
+    DBGrid1: TDBGrid;
+    q_dados: TFDQuery;
+    ds_dados: TDataSource;
+    edit_num: TEdit;
+    q_dadoscod_venda: TFDAutoIncField;
+    q_dadosnum_venda: TIntegerField;
+    q_dadoscod_cliente: TIntegerField;
+    q_dadosobservacao: TMemoField;
+    q_dadosdata: TSQLTimeStampField;
+    procedure b_produtoClick(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure edit_numChange(Sender: TObject);
+    procedure edit_nomeChange(Sender: TObject);
+    procedure edit_dataChange(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+  private
+    { Private declarations }
+
+    //tabela, campo_chave, campo_pesquisa,
+    //cod_produto : string;
+
+       procedure carregar_dados(p:string); virtual;
+  public
+    { Public declarations }
+  protected
+           //function Validar : boolean; override;
+           // function pode_excluir: string; override;
+//           procedure controle_visual; //override;
+  end;
+
+var
+  f_devolucao: Tf_devolucao;
+
+implementation
+
+{$R *.dfm}
+
+uses u_pesquisa, u_dm;
+procedure Tf_devolucao.carregar_dados(p: string);
+begin
+     {
+     q_dados.SQL.Clear;
+     q_dados.SQL.add(' select * ');
+     q_dados.SQL.add(' from ' + tabela+ ' ');
+     q_dados.SQL.add(' where ' + campo_pesquisa + ' like ' + QuotedStr('%'+p+'%') + ' ');
+     q_dados.SQL.add(' order by ' + campo_pesquisa + ' ');
+     q_dados.Open;
+
+     q_dados.SQL.Clear;
+     q_dados.SQL.add(' select * ');
+     q_dados.SQL.add(' from vendas ');
+     q_dados.SQL.add(' where num_venda   like ' + QuotedStr(edit_num.Text));
+     q_dados.SQL.add(' or cod_cliente like ' + QuotedStr(edit_nome.Text));
+     q_dados.SQL.add(' or data like ' + QuotedStr(edit_data.Text));
+     q_dados.SQL.add(' order by num_venda' );
+     q_dados.Open;
+     }
+     showmessage('erro carregar 1');
+     q_dados.SQL.Clear;
+     q_dados.SQL.add('select p.descricao,p.preco_venda,i.quantidade');
+     q_dados.SQL.add(' from vendas i');
+     q_dados.SQL.add(' INNER JOIN vendas v ON i.cod_venda = v.cod_venda');
+     q_dados.SQL.add(' INNER JOIN produtos p ON i.cod_produto = p.cod_produto');
+     q_dados.SQL.add(' where v.num_venda = ' + QuotedStr(edit_num.Text));
+     q_dados.SQL.add(' or v.cod_cliente  = ' + QuotedStr(edit_nome.Text));
+     q_dados.SQL.add(' or v.data         = ' + QuotedStr(edit_data.Text));
+     q_dados.SQL.add(' order by num_venda' );
+     q_dados.Open;
+     // DEPOIS PESQUISAR E SABER A DIFERENÇA ENTRE LIKE  E =, POIS DENTRO
+     //DO SEU SELECT IRIA MOSTRAR MAIS DE UM CÓDIGO DE CLIENTE, POIS SE TIVER
+     // UM CODIGO DE CLIENTE COM O NUMERO 123 E OUTRO 1234, OS DOIS SERÃO
+     //MOSTRADO DENTRO DO SELECT
+     // atenda o telefone --- estou te
+     showmessage('erro carregar 2');
+end;
+procedure Tf_devolucao.DBGrid1CellClick(Column: TColumn);
+begin
+     showMessage('Entrou aqui');
+    //testa com o run debugg -> após arrumar a linha debaixo
+    edit_num.TEXT := q_dados.FIELDBYNAME('num_venda').AsString;
+    showMessage('saiu aqui');
+    //arruma e tenta ver se funciona... só estou na dúvida sobre o que
+    //vai fazer com o seelct que está dentro do q_dados, eu não sei, se tira esse
+    //select ou deixa
+end;
+
+procedure Tf_devolucao.edit_dataChange(Sender: TObject);
+begin
+     //carregar_dados(edit_data.Text);
+end;
+
+procedure Tf_devolucao.edit_nomeChange(Sender: TObject);
+begin
+     //carregar_dados(edit_nome.Text);
+end;
+
+procedure Tf_devolucao.edit_numChange(Sender: TObject);
+begin
+     //carregar_dados(edit_num.Text);
+end;
+
+procedure Tf_devolucao.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+     Action:=caFree;
+     f_devolucao:= nil;
+end;
+
+
+procedure Tf_devolucao.Button1Click(Sender: TObject);
+begin
+     {
+     q_dados.SQL.Clear;
+     q_dados.SQL.add('select p.descricao,p.preco_venda,i.quantidade');
+     q_dados.SQL.add(' from vendas i');
+     q_dados.SQL.add(' INNER JOIN vendas v ON i.cod_venda = v.cod_venda');
+     q_dados.SQL.add(' INNER JOIN produtos p ON i.cod_produto = p.cod_produto');
+     q_dados.SQL.add(' where v.num_venda like ' + QuotedStr(edit_num.Text));
+     q_dados.SQL.add(' or v.cod_cliente  like ' + QuotedStr(edit_nome.Text));
+     q_dados.SQL.add(' or v.data         like ' + QuotedStr(edit_data.Text));
+     q_dados.SQL.add(' order by num_venda' );
+     q_dados.Open;
+     }
+     showmessage('erro botao pesquisar 1');
+     carregar_dados(edit_num.Text);
+     showmessage('erro botao pesquisar 2');
+end;
+
+procedure Tf_devolucao.Button3Click(Sender: TObject);
+begin
+     edit_num.text:= '';edit_nome.text:= '';edit_data.text:= '';
+end;
+
+procedure Tf_devolucao.b_produtoClick(Sender: TObject);
+begin
+      f_pesquisa:= TF_Pesquisa.create(application);
+      f_pesquisa.tabela:= 'clientes';
+      f_pesquisa.codigo:= 'cod_cliente';
+      f_pesquisa.campo1:= 'nome';
+      f_pesquisa.campo2:= '';
+      f_pesquisa.rotulo_codigo:= 'Código';
+      f_pesquisa.rotulo_c1:= 'Cliente';
+      f_pesquisa.rotulo_c2:= '';
+      f_pesquisa.largura_codigo:= 0.10; // 10% da largura do dbgrid
+      f_pesquisa.largura_c1:= 0.80;
+      f_pesquisa.largura_c2:= 0.0;
+      // se o usuário clicou no enter
+      if f_pesquisa.ShowModal = mrOk then
+      begin
+        // se a pesquisa não estiver vazia
+        if not f_pesquisa.q_dados.isempty then
+        begin
+          edit_nome.text:= f_pesquisa.q_dados.fieldbyname('nome').AsString;
+        end;
+      end; // if ok....
+      f_pesquisa.free;
+end;
+
+end.

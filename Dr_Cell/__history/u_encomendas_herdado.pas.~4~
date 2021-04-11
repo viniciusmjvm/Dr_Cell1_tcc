@@ -1,0 +1,101 @@
+unit u_encomendas_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Mask,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  Tf_encomendas_herdado = class(Tf_cadastropadrao)
+    q_dadoscod_cliente: TIntegerField;
+    q_dadosdata: TSQLTimeStampField;
+    q_dadosvalor_total: TFloatField;
+    Label2: TLabel;
+    Label3: TLabel;
+    edit_data: TDBEdit;
+    Label4: TLabel;
+    edit_valor: TDBEdit;
+    edit_cod_cidade: TDBEdit;
+    b_pesquisa_cliente: TSpeedButton;
+    edit_nome_cidade: TDBEdit;
+    procedure b_pesquisa_clienteClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+  private
+
+         function validar : boolean; override;
+  end;
+
+var
+  f_encomendas_herdado: Tf_encomendas_herdado;
+
+implementation
+
+{$R *.dfm}
+
+uses u_pesquisa;
+procedure Tf_encomendas_herdado.b_pesquisa_clienteClick(Sender: TObject);
+begin
+  inherited;
+  f_pesquisa:= Tf_pesquisa.create(application);
+
+  f_pesquisa.tabela:='clientes';
+  f_pesquisa.codigo:='cod_cliente';
+  f_pesquisa.campo1:='nome';
+  f_pesquisa.campo2:='cpf';
+
+  f_pesquisa.rotulo_codigo:='Código';
+  f_pesquisa.rotulo_c1:= 'Nome do Cliente';
+  f_pesquisa.rotulo_c2:='CPF';
+
+  f_pesquisa.largura_codigo:=0.10;
+  f_pesquisa.largura_c1:=0.60;
+  f_pesquisa.largura_c2:=0.50;
+
+  f_pesquisa.ShowModal;
+
+  if f_pesquisa.ModalResult = mrOk then
+  begin
+       edit_cod_cliente.Text:=f_pesquisa.q_dados.FieldByName(f_pesquisa.codigo).AsString;
+  end;
+
+  f_pesquisa.Free;
+end;
+
+function Tf_encomendas_herdado.validar;
+begin
+ //    if combo_cod_medida.ItemIndex = -1 then
+//     begin
+ //         ShowMessage('A Unidade de Medida deve ser preenchida!');
+ //         exit;
+ //    end;
+
+     if trim(edit_data.Text) = '' then
+     begin
+          ShowMessage('A Data deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+          if trim(edit_valor.Text) = '' then
+     begin
+          ShowMessage('O Valor Total deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+
+     result:= true;
+
+end;
+
+end.

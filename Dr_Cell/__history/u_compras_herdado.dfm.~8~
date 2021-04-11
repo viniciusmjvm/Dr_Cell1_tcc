@@ -1,0 +1,165 @@
+inherited f_compras_herdado: Tf_compras_herdado
+  Caption = 'Cadastro de Compras - Herdado'
+  ClientHeight = 490
+  ExplicitHeight = 518
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Bevel1: TBevel
+    Height = 201
+    ExplicitHeight = 201
+  end
+  inherited Label1: TLabel
+    Top = 268
+    ExplicitTop = 268
+  end
+  object Label2: TLabel [2]
+    Left = 16
+    Top = 15
+    Width = 68
+    Height = 16
+    Caption = 'Nota Fiscal'
+    FocusControl = edit_nota_fiscal
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel [3]
+    Left = 16
+    Top = 64
+    Width = 31
+    Height = 16
+    Caption = 'Data'
+    FocusControl = edit_data
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel [4]
+    Left = 16
+    Top = 104
+    Width = 73
+    Height = 16
+    Caption = 'Fornecedor'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label5: TLabel [5]
+    Left = 16
+    Top = 157
+    Width = 70
+    Height = 16
+    Caption = 'Valor Total'
+    FocusControl = edit_valor
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  inherited b_gravar: TButton
+    Top = 227
+    ExplicitTop = 227
+  end
+  inherited b_cancelar: TButton
+    Top = 227
+    ExplicitTop = 227
+  end
+  inherited edit_pesquisa: TEdit
+    Top = 293
+    ExplicitTop = 293
+  end
+  inherited b_incluir: TButton
+    Top = 287
+    ExplicitTop = 287
+  end
+  inherited b_alterar: TButton
+    Top = 342
+    ExplicitTop = 342
+  end
+  inherited b_excluir: TButton
+    Top = 397
+    ExplicitTop = 397
+  end
+  inherited b_fechar: TButton
+    Top = 448
+    ExplicitTop = 448
+  end
+  inherited grid_dados: TDBGrid
+    Top = 328
+  end
+  object edit_nota_fiscal: TDBEdit [14]
+    Left = 16
+    Top = 37
+    Width = 134
+    Height = 21
+    DataField = 'nota_fiscal'
+    DataSource = ds_dados
+    TabOrder = 8
+  end
+  object edit_data: TDBEdit [15]
+    Left = 16
+    Top = 80
+    Width = 134
+    Height = 21
+    DataField = 'data'
+    DataSource = ds_dados
+    TabOrder = 9
+  end
+  object edit_valor: TDBEdit [16]
+    Left = 16
+    Top = 176
+    Width = 134
+    Height = 21
+    DataField = 'valor_total'
+    DataSource = ds_dados
+    TabOrder = 10
+  end
+  object combo_cod_unidade: TDBLookupComboBox [17]
+    Left = 16
+    Top = 126
+    Width = 145
+    Height = 21
+    TabOrder = 11
+  end
+  inherited q_dados: TFDQuery
+    SQL.Strings = (
+      'select * from compras'
+      'order by nota_fiscal')
+    Top = 360
+    object q_dadosnota_fiscal: TIntegerField
+      FieldName = 'nota_fiscal'
+      Origin = 'nota_fiscal'
+      Required = True
+    end
+    object q_dadosdata: TSQLTimeStampField
+      FieldName = 'data'
+      Origin = 'data'
+      Required = True
+      EditMask = '99/99/9999;0;_'
+    end
+    object q_dadoscod_fornecedor: TIntegerField
+      FieldName = 'cod_fornecedor'
+      Origin = 'cod_fornecedor'
+      Required = True
+    end
+    object q_dadosvalor_total: TFloatField
+      FieldName = 'valor_total'
+      Origin = 'valor_total'
+    end
+  end
+  inherited ds_dados: TDataSource
+    DataSet = q_dados
+    Top = 360
+  end
+end

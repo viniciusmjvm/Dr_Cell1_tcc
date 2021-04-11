@@ -1,0 +1,62 @@
+unit u_pratos_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask;
+
+type
+  Tf_pratos_herdado = class(Tf_cadastropadrao)
+    q_dadosnome: TStringField;
+    q_dadosdescricao_detalhada: TMemoField;
+    q_dadosvalor: TFloatField;
+    Label2: TLabel;
+    edit_nome: TDBEdit;
+    Label3: TLabel;
+    memo_descricao: TDBMemo;
+    Label4: TLabel;
+    edit_valor: TDBEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    private
+
+         function validar : boolean; override;
+  end;
+
+var
+  f_pratos_herdado: Tf_pratos_herdado;
+
+implementation
+
+{$R *.dfm}
+
+function Tf_pratos_herdado.validar;
+begin
+     if trim(edit_nome.Text) = '' then
+     begin
+          ShowMessage('O Nome deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(memo_descricao.Text) = '' then
+     begin
+          ShowMessage('A Descrição Detalhada deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+     if trim(edit_valor.Text) = '' then
+     begin
+          ShowMessage('O Valor deve ser preenchido!');
+          exit;
+     end;
+
+end.

@@ -1,0 +1,68 @@
+unit u_encomendas_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Mask,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls;
+
+type
+  Tf_encomendas_herdado = class(Tf_cadastropadrao)
+    q_dadoscod_cliente: TIntegerField;
+    q_dadosdata: TSQLTimeStampField;
+    q_dadosvalor_total: TFloatField;
+    Label2: TLabel;
+    Label3: TLabel;
+    edit_data: TDBEdit;
+    Label4: TLabel;
+    edit_valor: TDBEdit;
+    DBComboBox1: TDBComboBox;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+  private
+
+         function validar : boolean; override;
+  end;
+
+var
+  f_encomendas_herdado: Tf_encomendas_herdado;
+
+implementation
+
+{$R *.dfm}
+function Tf_encomendas_herdado.validar;
+begin
+ //    if combo_cod_medida.ItemIndex = -1 then
+//     begin
+ //         ShowMessage('A Unidade de Medida deve ser preenchida!');
+ //         exit;
+ //    end;
+
+     if trim(edit_data.Text) = '' then
+     begin
+          ShowMessage('A Data deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+          if trim(edit_valor.Text) = '' then
+     begin
+          ShowMessage('O Valor Total deve ser preenchido!');
+          result:=false;
+          exit;
+     end;
+
+
+     result:= true;
+
+end;
+
+end.

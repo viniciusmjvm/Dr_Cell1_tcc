@@ -1,0 +1,109 @@
+inherited f_ingredientes_herdado: Tf_ingredientes_herdado
+  Caption = 'Cadastro de Ingredientes  - Herdado'
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label2: TLabel [2]
+    Left = 24
+    Top = 16
+    Width = 63
+    Height = 16
+    Caption = 'Descricao'
+    FocusControl = edit_descricao
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel [3]
+    Left = 24
+    Top = 62
+    Width = 88
+    Height = 16
+    Caption = 'Valor Unitario'
+    FocusControl = edit_valor
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel [4]
+    Left = 24
+    Top = 108
+    Width = 121
+    Height = 16
+    Caption = 'Unidade de Medida'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object edit_descricao: TDBEdit [13]
+    Left = 24
+    Top = 35
+    Width = 550
+    Height = 21
+    DataField = 'descricao'
+    DataSource = ds_dados
+    TabOrder = 8
+  end
+  object edit_valor: TDBEdit [14]
+    Left = 24
+    Top = 81
+    Width = 134
+    Height = 21
+    DataField = 'valor_unitario'
+    DataSource = ds_dados
+    TabOrder = 9
+  end
+  object combo_cod_medida: TDBLookupComboBox [15]
+    Left = 24
+    Top = 130
+    Width = 145
+    Height = 21
+    DataField = 'cod_unidade'
+    DataSource = ds_dados
+    ListSource = ds_unidades
+    TabOrder = 10
+  end
+  inherited q_dados: TFDQuery
+    SQL.Strings = (
+      'select * from ingredientes'
+      'order by descricao')
+    object q_dadosdescricao: TStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Required = True
+      Size = 100
+    end
+    object q_dadosvalor_unitario: TFloatField
+      FieldName = 'valor_unitario'
+      Origin = 'valor_unitario'
+    end
+    object q_dadoscod_unidade: TIntegerField
+      FieldName = 'cod_unidade'
+      Origin = 'cod_unidade'
+      Required = True
+    end
+  end
+  inherited ds_dados: TDataSource
+    DataSet = q_dados
+  end
+  object ds_unidades: TDataSource
+    Left = 216
+    Top = 128
+  end
+  object q_unidades: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'select * from unidades'
+      'order by descricao')
+    Left = 296
+    Top = 128
+  end
+end

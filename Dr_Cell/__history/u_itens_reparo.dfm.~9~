@@ -1,0 +1,440 @@
+object f_itens_reparo: Tf_itens_reparo
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'Itens do Reparo'
+  ClientHeight = 334
+  ClientWidth = 612
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poScreenCenter
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Bevel1: TBevel
+    Left = -5
+    Top = 0
+    Width = 614
+    Height = 97
+  end
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 106
+    Height = 16
+    Caption = 'Item do Reparo:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 45
+    Width = 31
+    Height = 16
+    Caption = 'Pe'#231'a'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 319
+    Top = 45
+    Width = 74
+    Height = 16
+    Caption = 'Quantidade'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 216
+    Top = 45
+    Width = 88
+    Height = 16
+    Caption = 'Valor Unitario'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object b_produto: TSpeedButton
+    Left = 55
+    Top = 65
+    Width = 23
+    Height = 22
+    Caption = '?'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = b_produtoClick
+  end
+  object l_itens_reparo: TLabel
+    Left = 120
+    Top = 8
+    Width = 4
+    Height = 18
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold, fsUnderline]
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 231
+    Top = 295
+    Width = 48
+    Height = 23
+    Caption = 'Qtd :'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 372
+    Top = 295
+    Width = 56
+    Height = 23
+    Caption = 'Total:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 347
+    Top = 299
+    Width = 19
+    Height = 16
+    Caption = '(x)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object b_incluir: TButton
+    Left = 529
+    Top = 111
+    Width = 75
+    Height = 35
+    Caption = 'Incluir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    OnClick = b_incluirClick
+  end
+  object grid_dados: TDBGrid
+    Left = 0
+    Top = 103
+    Width = 523
+    Height = 178
+    DataSource = ds_dados
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'cod_itens_reparos'
+        Title.Caption = 'C'#243'd.'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cod_reparo'
+        Title.Caption = 'Reparo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cod_peca'
+        Title.Caption = 'Pe'#231'a'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 50
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'valor'
+        Title.Caption = 'Valor'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'quantidade'
+        Title.Caption = 'Qtd.'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'valor_total'
+        Title.Caption = 'Total'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end>
+  end
+  object b_fechar: TButton
+    Left = 529
+    Top = 210
+    Width = 75
+    Height = 35
+    Caption = 'Fechar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnClick = b_fecharClick
+  end
+  object b_excluir: TButton
+    Left = 529
+    Top = 161
+    Width = 75
+    Height = 35
+    Caption = 'Excluir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnClick = b_excluirClick
+  end
+  object edit_cod_peca: TEdit
+    Left = 8
+    Top = 65
+    Width = 41
+    Height = 21
+    TabOrder = 4
+    OnChange = edit_cod_pecaChange
+    OnKeyPress = edit_cod_pecaKeyPress
+  end
+  object edit_valor: TEdit
+    Left = 216
+    Top = 63
+    Width = 73
+    Height = 24
+    Color = clMenu
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 5
+  end
+  object edit_quantidade: TEdit
+    Left = 327
+    Top = 67
+    Width = 66
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 6
+    OnKeyPress = edit_quantidadeKeyPress
+  end
+  object edit_descricao_peca: TEdit
+    Left = 84
+    Top = 63
+    Width = 109
+    Height = 24
+    Color = clMenu
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+  end
+  object edit_qtd: TDBEdit
+    Left = 285
+    Top = 286
+    Width = 60
+    Height = 36
+    Color = clWhite
+    DataField = 'total_itens'
+    DataSource = ds_pesq
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -24
+    Font.Name = 'Engravers MT'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    Font.Quality = fqProof
+    ParentFont = False
+    TabOrder = 8
+  end
+  object edit_total: TDBEdit
+    Left = 433
+    Top = 286
+    Width = 104
+    Height = 36
+    Color = clWhite
+    DataField = 'valor_total'
+    DataSource = ds_pesq
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clRed
+    Font.Height = -24
+    Font.Name = 'Engravers MT'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    Font.Quality = fqProof
+    ParentFont = False
+    TabOrder = 9
+  end
+  object q_dados: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'select * from itens_reparos'
+      'where cod_reparo = cod_reparo'
+      'order by cod_itens_reparos')
+    Left = 208
+    Top = 168
+    object q_dadoscod_itens_reparos: TFDAutoIncField
+      FieldName = 'cod_itens_reparos'
+      Origin = 'cod_itens_reparos'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object q_dadoscod_peca: TIntegerField
+      Alignment = taLeftJustify
+      FieldName = 'cod_peca'
+      Origin = 'cod_peca'
+    end
+    object q_dadoscod_reparo: TIntegerField
+      Alignment = taLeftJustify
+      FieldName = 'cod_reparo'
+      Origin = 'cod_reparo'
+    end
+    object q_dadosquantidade: TIntegerField
+      Alignment = taLeftJustify
+      FieldName = 'quantidade'
+      Origin = 'quantidade'
+    end
+    object q_dadosvalor: TFloatField
+      Alignment = taLeftJustify
+      FieldName = 'valor'
+      Origin = 'valor'
+      DisplayFormat = '#,##0.00'
+      EditFormat = '#,##0.00'
+    end
+    object q_dadosvalor_total: TFloatField
+      FieldName = 'valor_total'
+      Origin = 'valor_total'
+      ReadOnly = True
+      DisplayFormat = '#,##0.00'
+      EditFormat = '#,##0.00'
+    end
+  end
+  object ds_dados: TDataSource
+    DataSet = q_dados
+    Left = 280
+    Top = 176
+  end
+  object pesq: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'select '
+      ' sum(quantidade) as total_itens,'
+      ' sum(valor_total) as valor_total'
+      ' from itens_reparos')
+    Left = 48
+    Top = 288
+    object pesqtotal_itens: TIntegerField
+      Alignment = taCenter
+      FieldName = 'total_itens'
+      Origin = 'total_itens'
+      ReadOnly = True
+    end
+    object pesqvalor_total: TFloatField
+      Alignment = taCenter
+      FieldName = 'valor_total'
+      Origin = 'valor_total'
+      ReadOnly = True
+      DisplayFormat = '#,##0.00'
+      EditFormat = '#,##0.00'
+    end
+  end
+  object ds_pesq: TDataSource
+    DataSet = pesq
+    Left = 136
+    Top = 288
+  end
+end

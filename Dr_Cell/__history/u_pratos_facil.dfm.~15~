@@ -1,0 +1,266 @@
+object f_prato_facil: Tf_prato_facil
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'Cadastro F'#225'cil de Pratos'
+  ClientHeight = 590
+  ClientWidth = 646
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 56
+    Height = 23
+    Caption = 'Nome'
+    FocusControl = edit_nome
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 191
+    Width = 56
+    Height = 23
+    Caption = 'Valor '
+    FocusControl = edit_valor
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 258
+    Width = 61
+    Height = 19
+    Caption = 'Pesquisa'
+    FocusControl = edit_valor
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 72
+    Width = 194
+    Height = 23
+    Caption = 'Descri'#231#227'o Detalhada'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object DBGrid1: TDBGrid
+    Left = 7
+    Top = 310
+    Width = 617
+    Height = 197
+    DataSource = ds_pratos
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -13
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = [fsBold]
+    Columns = <
+      item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'cod_prato'
+        Title.Alignment = taCenter
+        Title.Caption = 'C'#243'digo'
+        Width = 71
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'nome'
+        Title.Caption = 'Nome'
+        Width = 200
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'valor'
+        Title.Alignment = taCenter
+        Title.Caption = 'Valor'
+        Width = 108
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'descricao_detalhada'
+        Title.Caption = 'Descri'#231#227'o Detalhada'
+        Width = 150
+        Visible = True
+      end>
+  end
+  object edit_nome: TDBEdit
+    Left = 8
+    Top = 40
+    Width = 597
+    Height = 21
+    DataField = 'nome'
+    TabOrder = 1
+  end
+  object edit_valor: TDBEdit
+    Left = 8
+    Top = 220
+    Width = 182
+    Height = 21
+    DataField = 'valor'
+    DataSource = ds_pratos
+    TabOrder = 2
+  end
+  object b_fechar: TBitBtn
+    Left = 530
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Fechar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnClick = b_fecharClick
+  end
+  object b_excluir: TBitBtn
+    Left = 230
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Excluir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    OnClick = b_excluirClick
+  end
+  object b_alterar: TBitBtn
+    Left = 130
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Alterar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+    OnClick = b_alterarClick
+  end
+  object b_incluir: TBitBtn
+    Left = 30
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Incluir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+    OnClick = b_incluirClick
+  end
+  object b_gravar: TBitBtn
+    Left = 330
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Gravar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+    OnClick = b_gravarClick
+  end
+  object b_cancelar: TBitBtn
+    Left = 430
+    Top = 527
+    Width = 94
+    Height = 37
+    Caption = 'Cancelar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 8
+    OnClick = b_cancelarClick
+  end
+  object edit_pesquisa: TEdit
+    Left = 8
+    Top = 283
+    Width = 597
+    Height = 21
+    TabOrder = 9
+    OnChange = edit_pesquisaChange
+  end
+  object dbm_descricao_detalhada: TDBMemo
+    Left = 8
+    Top = 96
+    Width = 597
+    Height = 89
+    DataField = 'cod_prato'
+    DataSource = ds_pratos
+    TabOrder = 10
+  end
+  object q_pratos: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'select *'
+      'from pratos'
+      'order by nome')
+    Left = 304
+    Top = 328
+  end
+  object ds_pratos: TDataSource
+    DataSet = q_pratos
+    Left = 376
+    Top = 328
+  end
+end

@@ -1,0 +1,244 @@
+unit funcoes;
+
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, Db;
+
+Function valida_cpf(cpf:string):boolean;
+Function  is_Inteiro( n : string) : boolean;
+Function  RealUSA(x:string) : string;
+Function  Is_Date(Data : string) : Boolean;
+Function  Is_DateTime(Data : string) : Boolean;
+Function  is_Real( n : string) : boolean;
+function DataUSA( d : string ) : string;
+function DataBR( d : string ) : string;
+procedure apresentar_msg( s : string );
+
+var
+   usuario : record
+                   nome,
+                   login : string;
+                   administrador : boolean;
+             end;
+
+
+implementation
+
+//------------------------------------------------------------------------------
+Function valida_cpf(cpf:string):boolean;
+var i:integer;
+    Want:char;
+    Wvalid:boolean;
+    Wdigit1,Wdigit2:integer;
+begin
+     Wvalid:= false;
+
+     cpf:= trim(cpf);
+
+     if cpf = '' then
+     begin
+          result:= false;
+          exit;
+     end;
+
+    Wdigit1:=0;
+    Wdigit2:=0;
+    Want:=cpf[1];//variavel para testar se o cpf é repetido como 111.111.111-11
+    Delete(cpf,ansipos('.',cpf),1);  //retira as mascaras se houver
+    Delete(cpf,ansipos('.',cpf),1);
+    Delete(cpf,ansipos('-',cpf),1);
+
+     if length(cpf) <> 11  then
+     begin
+          result:= false;
+          exit;
+     end;
+
+
+   //testar se o cpf é repetido como 111.111.111-11
+   for i:=1 to length(cpf) do
+     begin
+       if cpf[i] <> Want then
+         begin
+            Wvalid:=true;  // se o cpf possui um digito diferente ele passou no primeiro teste
+            break
+         end;
+     end;
+       // se o cpf é composto por numeros repetido retorna falso
+     if not Wvalid then
+       begin
+          result:=false;
+          exit;
+       end;
+
+     //executa o calculo para o primeiro verificador
+     for i:=1 to 9 do
+       begin
+          wdigit1:=Wdigit1+(strtoint(cpf[10-i])*(I+1));
+       end;
+        Wdigit1:= ((11 - (Wdigit1 mod 11))mod 11) mod 10;
+        {formula do primeiro verificador
+            soma=1°*2+2°*3+3°*4.. até 9°*10
+            digito1 = 11 - soma mod 11
+            se digito > 10 digito1 =0
+          }
+
+         //verifica se o 1° digito confere
+        if IntToStr(Wdigit1) <> cpf[10] then
+          begin
+             result:=false;
+             exit;
+          end;
+
+
+         for i:=1 to 10 do
+       begin
+          wdigit2:=Wdigit2+(strtoint(cpf[11-i])*(I+1));
+       end;
+       Wdigit2:= ((11 - (Wdigit2 mod 11))mod 11) mod 10;
+         {formula do segundo verificador
+            soma=1°*2+2°*3+3°*4.. até 10°*11
+            digito1 = 11 - soma mod 11
+            se digito > 10 digito1 =0
+          }
+
+       // confere o 2° digito verificador
+       if IntToStr(Wdigit2) <> cpf[11] then
+          begin
+             result:=false;
+             exit;
+          end;
+
+   //se chegar até aqui o cpf é valido
+   result:=true;
+   
+end; // valida cpf
+(* *)
+
+//------------------------------------------------------------------------------
+Function  is_Inteiro( n : string) : boolean;
+var
+   code : integer;
+   x : integer;
+begin
+     // tenta converter
+     val(n, x, code);
+     result:= code = 0;          
+end;
+
+//------------------------------------------------------------------------------
+procedure apresentar_msg( s : string );
+begin
+     MessageDlg(s,mtInformation,[mbok],0);
+end;
+
+
+//------------------------------------------------------------------------------
+function DataBR( d : string ) : string;
+var
+   data_nova : string;
+begin
+     // 2012/05/07
+     data_nova:= copy(d, 1,2)+'/' + copy(d,4,2) +'/'+ copy(d,7,4);
+
+     result:= data_nova;
+
+end;
+
+//------------------------------------------------------------------------------
+function DataUSA( d : string ) : string;
+var
+   data_nova : string;
+begin
+     // 23/04/2012
+     data_nova:= copy(d,7,4) + '/' + copy(d,4,2) + '/' + copy(d, 1,2);
+     //data_nova:= copy(d,4,2) + '/' + copy(d, 1,2) +'/'+ copy(d,7,4);
+
+     result:= data_nova;
+
+     //showmessage(result);
+     //result:= d;
+
+end;
+
+//------------------------------------------------------------------------------
+Function  Is_Date(Data : string) : Boolean;
+begin
+     try
+        StrToDate(Data);
+     Except
+        on E:EConvertError do
+        begin
+             Result:= False;
+             Exit;
+        end
+     end;
+     Result:= True;
+end;
+
+//------------------------------------------------------------------------------
+Function  Is_DateTime(Data : string) : Boolean;
+begin
+     try
+        StrToDateTime(Data);
+     Except
+        on E:EConvertError do
+        begin
+             Result:= False;
+             Exit;
+        end
+     end;
+     Result:= True;
+end;
+
+//------------------------------------------------------------------------------
+Function  RealUSA(x:string) : string;
+var
+   i : integer;
+   n : string;
+begin
+     n:= x;
+     Result:= '';
+     for i:= 1 to length(n) do
+     begin
+          if n[i] = ',' then Result:= Result + '.'
+          else
+          if n[i] <> '.' then Result:= Result + n[i];
+     end;
+end;
+
+//------------------------------------------------------------------------------
+Function  is_Real( n : string) : boolean;
+var
+   code : integer;
+   x : real;
+   i : integer;
+   n_novo : string;
+begin
+     // tira separador de milhares e substitui virgula por ponto
+     n_novo:= '';
+     for i:= 1 to length(n) do
+     begin
+          if n[i] = ',' then n_novo:= n_novo + '.'
+          else
+          if n[i] <> '.' then n_novo:= n_novo + n[i];
+     end;
+
+     // tenta converter
+     val(n_novo, x, code);
+
+     if code <> 0 then
+     begin
+          result:= false;
+     end
+     else begin
+          result:= true;
+     end;
+
+end;
+
+
+end.

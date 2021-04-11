@@ -1,0 +1,70 @@
+unit u_unidades_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.Mask, Vcl.DBCtrls, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  Tf_unidades_herdado = class(Tf_cadastropadrao)
+    q_dadosdescricao: TStringField;
+    Label2: TLabel;
+    edit_descricao: TDBEdit;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+
+    private
+
+    protected
+            function Validar : boolean; override;
+            // function pode_excluir: string; override;
+             procedure controle_visual; override;
+  end;
+
+var
+  f_unidades_herdado: Tf_unidades_herdado;
+
+implementation
+
+{$R *.dfm}
+function Tf_unidades_herdado.validar;
+begin
+     if trim(edit_descricao.Text) = '' then
+     begin
+          ShowMessage('A Descrição deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+     result:= true;
+
+end;
+
+procedure Tf_unidades_herdado.controle_visual;
+begin
+  inherited;
+
+  edit_descricao.Enabled := q_dados.State in [dsEdit, dsInsert];
+  //edit_descricao.Enabled := edit_descricao.Enabled;
+end;
+
+procedure Tf_unidades_herdado.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  Action:= caFree;
+  f_unidades_herdado:= nil;
+end;
+
+
+
+end.

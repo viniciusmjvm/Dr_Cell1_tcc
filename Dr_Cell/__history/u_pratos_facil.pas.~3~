@@ -1,0 +1,43 @@
+unit u_pratos_facil;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.DBCtrls, Vcl.Mask, Vcl.Grids, Vcl.DBGrids;
+
+type
+  Tf_prato_facil = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Label4: TLabel;
+    DBGrid1: TDBGrid;
+    edit_descricao: TDBEdit;
+    edit_valor_unitario: TDBEdit;
+    b_fechar: TBitBtn;
+    b_excluir: TBitBtn;
+    b_alterar: TBitBtn;
+    b_incluir: TBitBtn;
+    b_gravar: TBitBtn;
+    b_cancelar: TBitBtn;
+    edit_pesquisa: TEdit;
+    q_pratos: TFDQuery;
+    ds_pratos: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_prato_facil: Tf_prato_facil;
+
+implementation
+
+{$R *.dfm}
+
+end.

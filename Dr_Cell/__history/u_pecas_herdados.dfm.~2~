@@ -1,0 +1,231 @@
+inherited f_pecas_herdados: Tf_pecas_herdados
+  Caption = 'Cadastro de Pe'#231'as'
+  ClientHeight = 408
+  ClientWidth = 473
+  ExplicitWidth = 479
+  ExplicitHeight = 437
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Bevel1: TBevel
+    Width = 466
+    Height = 121
+    ExplicitWidth = 466
+    ExplicitHeight = 121
+  end
+  inherited Label1: TLabel
+    Top = 168
+    ExplicitTop = 168
+  end
+  object Label2: TLabel [2]
+    Left = 8
+    Top = 8
+    Width = 74
+    Height = 18
+    Caption = 'Descri'#231#227'o'
+    FocusControl = edit_descricao
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel [3]
+    Left = 8
+    Top = 54
+    Width = 40
+    Height = 18
+    Caption = 'Valor'
+    FocusControl = edit_valor
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel [4]
+    Left = 116
+    Top = 54
+    Width = 86
+    Height = 18
+    Caption = 'Quantidade'
+    FocusControl = edit_quantidade
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  inherited b_gravar: TButton
+    Top = 127
+    ExplicitTop = 127
+  end
+  inherited b_cancelar: TButton
+    Top = 127
+    ExplicitTop = 127
+  end
+  inherited edit_pesquisa: TEdit
+    Top = 193
+    Width = 369
+    ExplicitTop = 193
+    ExplicitWidth = 369
+  end
+  inherited b_incluir: TButton
+    Left = 383
+    Top = 189
+    ExplicitLeft = 383
+    ExplicitTop = 189
+  end
+  inherited b_alterar: TButton
+    Left = 383
+    Top = 244
+    ExplicitLeft = 383
+    ExplicitTop = 244
+  end
+  inherited b_excluir: TButton
+    Left = 383
+    Top = 299
+    ExplicitLeft = 383
+    ExplicitTop = 299
+  end
+  inherited b_fechar: TButton
+    Left = 383
+    Top = 350
+    ExplicitLeft = 383
+    ExplicitTop = 350
+  end
+  inherited grid_dados: TDBGrid
+    Top = 225
+    Width = 369
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'cod_peca'
+        Title.Caption = 'C'#243'd.'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 40
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'descricao'
+        Title.Caption = 'Descri'#231#227'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 150
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'valor'
+        Title.Caption = 'Valor'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 80
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'qntd'
+        Title.Caption = 'Qntd.'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -15
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 70
+        Visible = True
+      end>
+  end
+  object edit_descricao: TDBEdit [13]
+    Left = 8
+    Top = 27
+    Width = 654
+    Height = 26
+    DataField = 'descricao'
+    DataSource = ds_dados
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 8
+  end
+  object edit_valor: TDBEdit [14]
+    Left = 8
+    Top = 73
+    Width = 75
+    Height = 26
+    DataField = 'valor'
+    DataSource = ds_dados
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 9
+  end
+  object edit_quantidade: TDBEdit [15]
+    Left = 116
+    Top = 73
+    Width = 134
+    Height = 26
+    DataField = 'qntd'
+    DataSource = ds_dados
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 10
+  end
+  inherited q_dados: TFDQuery
+    SQL.Strings = (
+      'select * from pecas'
+      'order by descricao')
+    Left = 264
+    Top = 268
+    object q_dadoscod_peca: TFDAutoIncField
+      FieldName = 'cod_peca'
+      Origin = 'cod_peca'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object q_dadosdescricao: TStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Required = True
+      Size = 50
+    end
+    object q_dadosvalor: TFloatField
+      FieldName = 'valor'
+      Origin = 'valor'
+      Required = True
+    end
+    object q_dadosqntd: TIntegerField
+      FieldName = 'qntd'
+      Origin = 'qntd'
+      Required = True
+    end
+  end
+  inherited ds_dados: TDataSource
+    DataSet = q_dados
+    Left = 160
+    Top = 260
+  end
+end

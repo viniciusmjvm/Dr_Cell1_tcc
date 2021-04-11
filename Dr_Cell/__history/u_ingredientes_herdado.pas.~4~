@@ -1,0 +1,39 @@
+unit u_ingredientes_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls;
+
+type
+  Tf_ingredientes_herdado = class(Tf_cadastropadrao)
+    q_dadosdescricao: TStringField;
+    q_dadosvalor_unitario: TFloatField;
+    q_dadoscod_unidade: TIntegerField;
+    Label2: TLabel;
+    DBEdit1: TDBEdit;
+    Label3: TLabel;
+    DBEdit2: TDBEdit;
+    Label4: TLabel;
+    Combo_cod_unidade: TDBLookupComboBox;
+    ds_unidades: TDataSource;
+    q_unidades: TFDQuery;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_ingredientes_herdado: Tf_ingredientes_herdado;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,24 @@
+unit u_trocas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  Tf_troca = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_troca: Tf_troca;
+
+implementation
+
+{$R *.dfm}
+
+end.

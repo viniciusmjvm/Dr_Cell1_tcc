@@ -1,0 +1,62 @@
+unit u_compras_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Mask;
+
+type
+  Tf_compras_herdado = class(Tf_cadastropadrao)
+    q_dadosnota_fiscal: TIntegerField;
+    q_dadosdata: TSQLTimeStampField;
+    q_dadoscod_fornecedor: TIntegerField;
+    q_dadosvalor_total: TFloatField;
+    Label2: TLabel;
+    edit_nota_fiscal: TDBEdit;
+    Label3: TLabel;
+    DBEdit2: TDBEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    DBEdit4: TDBEdit;
+    DBComboBox1: TDBComboBox;
+
+    private
+    { Private declarations }
+  public
+    { Public declarations }
+
+  private
+
+         function validar : boolean; override;
+  end;
+
+var
+  f_compras_herdado: Tf_compras_herdado;
+
+implementation
+
+{$R *.dfm}
+
+function Tf_compras_herdado.validar;
+begin
+     if trim(edit_nota_fiscal.Text) = '' then
+     begin
+          ShowMessage('A Nota Fiscal deve ser preenchida!');
+          result:=false;
+          exit;
+     end;
+
+
+
+
+
+     result:= true;
+
+end;
+
+end.

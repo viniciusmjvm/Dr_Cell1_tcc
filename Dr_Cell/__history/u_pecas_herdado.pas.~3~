@@ -1,0 +1,120 @@
+unit u_pecas_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.Mask, Vcl.DBCtrls, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  Tf_pecas_herdado = class(Tf_cadastropadrao)
+    q_dadoscod_peca: TFDAutoIncField;
+    q_dadosdescricao: TStringField;
+    q_dadosvalor: TFloatField;
+    q_dadosqntd: TIntegerField;
+    Label2: TLabel;
+    edit_descricao: TDBEdit;
+    Label3: TLabel;
+    edit_valor: TDBEdit;
+    Label4: TLabel;
+    edit_qntd: TDBEdit;
+    procedure edit_qntdKeyPress(Sender: TObject; var Key: Char);
+    procedure edit_descricaoKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edit_valorKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edit_qntdKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  protected
+            function Validar : boolean; override;
+            // function pode_excluir: string; override;
+             procedure controle_visual; override;
+  end;
+
+var
+  f_pecas_herdado: Tf_pecas_herdado;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tf_pecas_herdado.edit_descricaoKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if key = VK_RETURN then
+     begin
+          b_gravar.OnClick(self);
+     end;
+end;
+
+procedure Tf_pecas_herdado.edit_qntdKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if key = VK_RETURN then
+     begin
+          b_gravar.OnClick(self);
+     end;
+end;
+
+procedure Tf_pecas_herdado.edit_qntdKeyPress(Sender: TObject; var Key: Char);
+begin
+     inherited;
+     if not (key in ['1','2','3','4','5','6','7','8','9','0',',','x']) then
+     key :=#0;
+end;
+
+
+procedure Tf_pecas_herdado.edit_valorKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if key = VK_RETURN then
+     begin
+          b_gravar.OnClick(self);
+     end;
+end;
+
+procedure Tf_pecas_herdado.controle_visual;
+begin
+     inherited;
+     edit_descricao.Enabled := q_dados.State in [dsEdit, dsInsert];
+     edit_valor.Enabled := edit_descricao.Enabled;
+     edit_qntd.Enabled := edit_descricao.Enabled;
+end;
+
+function Tf_pecas_herdado.validar;
+begin
+     if trim(edit_descricao.Text) = '' then
+     begin
+          ShowMessage('A Descrição deve ser preenchido!');
+          edit_descricao.SetFocus;
+          exit;
+     end;
+
+     if trim(edit_valor.Text) = '' then
+     begin
+          ShowMessage('O valor deve ser informado!');
+          edit_valor.SetFocus;
+          exit;
+     end;
+
+     if trim(edit_qntd.Text) = '' then
+     begin
+          ShowMessage('A quantidade deve ser informado!');
+          //result:=false;
+          edit_qntd.SetFocus;
+          exit;
+     end;
+end;
+
+end.

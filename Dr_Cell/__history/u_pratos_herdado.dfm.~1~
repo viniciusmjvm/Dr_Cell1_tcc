@@ -1,0 +1,5 @@
+inherited f_pratos_herdado: Tf_pratos_herdado
+  Caption = 'Cadastro de Pratos - Herdado'
+  PixelsPerInch = 96
+  TextHeight = 13
+end

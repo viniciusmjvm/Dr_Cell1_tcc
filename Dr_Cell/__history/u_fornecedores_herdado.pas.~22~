@@ -1,0 +1,65 @@
+unit u_fornecedores_herdado;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, u_cadastropadrao, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Vcl.DBCtrls, Vcl.Mask, Vcl.ComCtrls,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  Tf_fornecedores_herdado = class(Tf_cadastropadrao)
+    q_dadoscod_fornecedor: TFDAutoIncField;
+    q_dadosnome: TStringField;
+    q_dadoscnpj: TStringField;
+    q_dadosendereco: TStringField;
+    q_dadosnum_casa: TIntegerField;
+    q_dadosbairro: TStringField;
+    q_dadoscod_cidade: TIntegerField;
+    q_dadoscep: TStringField;
+    q_dadostelefone: TStringField;
+    q_dadoscelular: TStringField;
+    q_dadosemail: TStringField;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    Contato: TTabSheet;
+    Label2: TLabel;
+    edit_nome: TDBEdit;
+    Label3: TLabel;
+    edit_cnpj: TDBEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    edit_cep: TDBEdit;
+    cb1: TDBLookupComboBox;
+    Label6: TLabel;
+    edit_endereco: TDBEdit;
+    Label7: TLabel;
+    edit_num: TDBEdit;
+    Label8: TLabel;
+    edit_bairro: TDBEdit;
+    Label9: TLabel;
+    edit_telefone: TDBEdit;
+    Label10: TLabel;
+    edit_celular: TDBEdit;
+    Label11: TLabel;
+    edit_email: TDBEdit;
+    q_cidades: TFDQuery;
+    ds_cidades: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  f_fornecedores_herdado: Tf_fornecedores_herdado;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,140 @@
+inherited f_categorias_herdado: Tf_categorias_herdado
+  Caption = 'Cadastro de Categorias'
+  ClientHeight = 371
+  ClientWidth = 472
+  ExplicitWidth = 478
+  ExplicitHeight = 400
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Bevel1: TBevel
+    Left = -3
+    Width = 461
+    Height = 73
+    ExplicitLeft = -3
+    ExplicitWidth = 461
+    ExplicitHeight = 73
+  end
+  inherited Label1: TLabel
+    Top = 120
+    ExplicitTop = 120
+  end
+  object Label2: TLabel [2]
+    Left = 8
+    Top = 8
+    Width = 63
+    Height = 16
+    Caption = 'Descri'#231#227'o'
+    FocusControl = edit_descricao
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  inherited b_gravar: TButton
+    Top = 79
+    ExplicitTop = 79
+  end
+  inherited b_cancelar: TButton
+    Top = 79
+    ExplicitTop = 79
+  end
+  inherited edit_pesquisa: TEdit
+    Top = 145
+    Width = 369
+    ExplicitTop = 145
+    ExplicitWidth = 369
+  end
+  inherited b_incluir: TButton
+    Left = 383
+    Top = 145
+    ExplicitLeft = 383
+    ExplicitTop = 145
+  end
+  inherited b_alterar: TButton
+    Left = 383
+    Top = 200
+    ExplicitLeft = 383
+    ExplicitTop = 200
+  end
+  inherited b_excluir: TButton
+    Left = 383
+    Top = 255
+    ExplicitLeft = 383
+    ExplicitTop = 255
+  end
+  inherited b_fechar: TButton
+    Left = 383
+    Top = 306
+    ExplicitLeft = 383
+    ExplicitTop = 306
+  end
+  inherited grid_dados: TDBGrid
+    Top = 177
+    Width = 369
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'cod_categoria'
+        Title.Caption = 'C'#243'd.'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 64
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'descricao'
+        Title.Caption = 'Descri'#231#227'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
+        Width = 300
+        Visible = True
+      end>
+  end
+  object edit_descricao: TDBEdit [11]
+    Left = 6
+    Top = 30
+    Width = 400
+    Height = 24
+    DataField = 'descricao'
+    DataSource = ds_dados
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 8
+  end
+  inherited q_dados: TFDQuery
+    SQL.Strings = (
+      'select * from categorias'
+      'order by descricao')
+    Top = 212
+    object q_dadosdescricao: TStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Required = True
+      Size = 100
+    end
+    object q_dadoscod_categoria: TFDAutoIncField
+      Alignment = taLeftJustify
+      FieldName = 'cod_categoria'
+      Origin = 'cod_categoria'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+  end
+  inherited ds_dados: TDataSource
+    DataSet = q_dados
+    Top = 212
+  end
+end
